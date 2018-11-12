@@ -1,3 +1,4 @@
+
 function limpiar(){
 	//inicializa la página
 	$('#formInicio').remove();
