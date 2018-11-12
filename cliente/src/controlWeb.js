@@ -93,5 +93,43 @@ function mostrarMano(datos){
 function mostrarElixir(elixir,vidas){
 	$('#mostrarElixir').remove();
 	var cadena='<div id="mostrarElixir"><h3>Elixir'+elixir+' - Vidas:'+vidas+'</h3></div>';
-	$('elixir').append(cadena);
+	$('#elixir').append(cadena);
+}
+
+function mostrarAtaqueRival(datos){
+  $('#mostrarAtaqueRival').remove();
+  var numCol=Math.round(12/(datos.length));
+  $('#mostrarAtaqueRival').remove();
+  var cadena='<div id="mostrarAtaqueRival">';
+  //cadena=cadena+'<div class="col-md-'+numCol+'"></div>';
+  for(var i=0;i<datos.length;i++){
+    cadena=cadena+'<div class="col-md-'+numCol+'">';
+    cadena=cadena+'<div class="thumbnail">';
+    cadena=cadena+'<img src="cliente/img/'+datos[i].nombre+'.png" class="img-rounded" id="'+datos[i].nombre+'" style="width:100%">';
+    cadena=cadena+'</div></div>'
+  }
+   cadena=cadena+'</div>';
+  $('#ataqueRival').append(cadena);
+
+}
+function mostrarRival(datos){
+  $('#mostrarRival').remove();
+  var cadena='<div id="mostrarRival><h3>Rival - Elixir: '+elixir+' - Vidas:'+vidas+'</h3></div>';
+  $('#rival').append(cadena);
+}
+function mostrarAtaque(datos){
+  $('#mostrarAtaque').remove();
+  var numCol=Math.round(12/(datos.length));
+  $('#mostrarAtaque').remove();
+  var cadena='<div id="mostrarAtaque">';
+  //cadena=cadena+'<div class="col-md-'+numCol+'"></div>';
+  for(var i=0;i<datos.length;i++){
+    cadena=cadena+'<div class="col-md-'+numCol+'">';
+    cadena=cadena+'<div class="thumbnail">';
+    cadena=cadena+'<img src="cliente/img/'+datos[i].nombre+'.png" class="img-rounded" id="'+datos[i].nombre+'" style="width:100%">';
+    cadena=cadena+'</div></div>'
+  }
+   cadena=cadena+'</div>';
+  $('#ataque').append(cadena);
+
 }

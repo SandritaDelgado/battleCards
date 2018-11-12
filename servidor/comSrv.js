@@ -54,7 +54,7 @@ function ComSrv(){
 				var usr=juego.usuarios[usrid];
 				if (usr){
 					//socket.emit("mano",usr.obtenerCartasMano());
-					cli.enviarRemitente(socket,"mano",{"mano":usr.obtenerCartasMano(),"elixir":usr.elixir});
+					cli.enviarRemitente(socket,"mano",{"mano":usr.obtenerCartasMano(),"elixir":usr.elixir,"vidas":usr.vidas});
 				}
 			});
 			socket.on('obtenerCartasAtaque',function(usrid,nombrePartida){

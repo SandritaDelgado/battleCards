@@ -75,10 +75,13 @@ function ClienteCom(){
 		});
 		this.socket.on("cartasAtaque",function(datos){
 			console.log(datos);
+			mostrarAtaque(datos.mano);
 		});
 		this.socket.on('datosRival',function(datos){
 			console.log(datos);
-			usr.datosRival=datos;
+			//usr.datosRival=datos;
+			mostrarRival(datos.elixir,datos.vidas);
+			mostrarAtaqueRival(datos.cartas);
 		});
 		this.socket.on('noJugada', function(carta){ 
 			console.log("El usuario no pudo jugar la carta con coste: "+carta.coste);
