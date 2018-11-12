@@ -68,8 +68,10 @@ function ClienteCom(){
 		});
 		this.socket.on('mano',function(datos){
 			console.log(datos);
-			usr.cartasMano=datos.mano;
-			usr.elixir=datos.elixir;
+			mostrarElixir(datos.elixir,datos.vidas);
+			mostrarMano(datos.mano);
+			//usr.cartasMano=datos.mano;
+			//usr.elixir=datos.elixir;
 		});
 		this.socket.on("cartasAtaque",function(datos){
 			console.log(datos);

@@ -67,3 +67,31 @@ function mostrarListaPartidas(datos){
         }
     });
 }
+
+function mostrarMano(datos){
+  $('#mostrarMano').remove();
+  var numCol=Math.round(12/(datos.length));
+  $('#mostrarMano').remove();
+  var cadena='<div id="mostrarMano">';
+  //cadena=cadena+'<div class="col-md-'+numCol+'"></div>';
+  for(var i=0;i<datos.length;i++){
+    cadena=cadena+'<div class="col-md-'+numCol+'">';
+    cadena=cadena+'<div class="thumbnail">';
+    cadena=cadena+'<img src="cliente/img/'+datos[i].nombre+'.png" class="img-rounded" id="'+datos[i].nombre+'" style="width:100%">';
+    cadena=cadena+'</div></div>'
+  }
+   cadena=cadena+'</div>';
+  $('#mano').append(cadena);
+
+  $('.img-rounded').click(function(){
+    var nombreCarta=$(this).attr("id");
+    console.log(nombreCarta);
+    seleccionarCarta(nombreCarta);
+  });
+}
+
+function mostrarElixir(elixir,vidas){
+	$('#mostrarElixir').remove();
+	var cadena='<div id="mostrarElixir"><h3>Elixir'+elixir+' - Vidas:'+vidas+'</h3></div>';
+	$('elixir').append(cadena);
+}
