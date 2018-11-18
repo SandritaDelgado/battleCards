@@ -31,6 +31,17 @@ app.get("/agregarUsuario/:nombre",function(request,response){
 	response.send({"usr":usr1.id});
 });
 
+app.get("/comprobarUsuario/:usrid",function(request,response){
+	var usrid=request.params.usrid;
+	var usr=juego.usuarios[usrid];
+	var json={"partida":undefined}
+	if (usr){
+	    json={"partida":usr.partida.nombre};
+	}
+	response.send(json);
+});
+
+
 app.get("/crearPartida/:usrid/:nombre",function(request,response){
 	var usrid=request.params.usrid;
 	var partida=request.params.nombre;

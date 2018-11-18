@@ -8,6 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script src="cliente/src/clienteCom.js"></script>
   <script src="cliente/src/clienteRest.js"></script>
   <script src="cliente/src/clienteUsuario.js"></script>
@@ -15,7 +16,7 @@
 </head>
 <body>
 
-<div class="jumbotron text-center">
+<div id="cabecera" class="jumbotron text-center">
   <h1>BattleCards Game</h1>
   <p>Adentrate en una partida apasionante de cartas</p> 
 </div>
@@ -63,8 +64,9 @@
 <script>
     rest=new ClienteRest();
     com=new ClienteCom();
-    usr=new ClienteUsuario();
-    mostrarFormularioNombre();
+    comprobarUsuario();
+    //usr=new ClienteUsuario();
+    //mostrarFormularioNombre();
   </script>
 </body>
 </html>

@@ -2,6 +2,8 @@ function ClienteCom(){
 	this.socket=undefined;
 	this.nombrePartida=undefined;
 	this.usrId=undefined;
+	this.carta1=undefined;
+	this.carta2=undefined;
 	this.ini=function(usrid){
 		this.socket=io.connect();
 		this.usrId=usrid;
@@ -16,6 +18,9 @@ function ClienteCom(){
 		this.nombrePartida=nombre;	
     	this.socket.emit('elegirPartida',this.usrId,nombre);
 	};
+	this.retomarPartida=function(){
+		this.socket.emit("retomarPartida",this.usrId,this.nombrePartida);
+	}
 	this.meToca=function(){
 		this.socket.emit("meToca",this.usrId,this.nombrePartida);
 	}
@@ -40,6 +45,9 @@ function ClienteCom(){
    	this.atacarRival=function(idCarta1){
    		this.socket.emit('atacarRival',this.usrId,this.nombrePartida,idCarta1);
    	}
+   	this.abandonarPartida=function(){
+   		this.socket.emit('abandonarPartida',this.usrId,this.nombrePartida);
+   	}
 	this.lanzarSocketSrv=function(){
 		var cli=this;
 		this.socket.on('connect', function(){   						
@@ -47,35 +55,38 @@ function ClienteCom(){
 		});
 		this.socket.on('partidaCreada', function(partidaId){   						
    			console.log("Usuario crea partida con id: "+partidaId);
-   			rest.obtenerPartidas();
+   			//rest.obtenerPartidas();
+   			mostrarEsperandoRival();
    			//console.log("Mano: "+mano);
 		});
 		this.socket.on('unidoAPartida', function(partidaId){   						
-   			console.log("Usuario unido a partida id: "+partidaId);
+   			console.log("Usuario unido a partida id: "+partidaId);   			
 		});
 		this.socket.on('noUnido', function(partidaId){   						
    			console.log("El usuario no pudo unirse a la partida id: "+partidaId);
 		});
 		this.socket.on("aJugar",function(partidaId){
 			console.log("La partida "+partidaId+" esta en fase Jugando");
+			eliminarGif();
 			cli.meToca();
 		});
 		this.socket.on("meToca",function(turno){	
 			console.log("Mi turno está a: "+turno);
+			limpiar();
 			cli.obtenerCartasMano();
 			cli.obtenerCartasAtaque();
 			cli.obtenerDatosRival();
 		});
 		this.socket.on('mano',function(datos){
 			console.log(datos);
-			mostrarElixir(datos.elixir,datos.vidas);
+			mostrarElixir(datos.turno,datos.elixir,datos.vidas);
 			mostrarMano(datos.mano);
 			//usr.cartasMano=datos.mano;
 			//usr.elixir=datos.elixir;
 		});
 		this.socket.on("cartasAtaque",function(datos){
 			console.log(datos);
-			mostrarAtaque(datos.mano);
+			mostrarAtaque(datos.ataque);
 		});
 		this.socket.on('datosRival',function(datos){
 			console.log(datos);
@@ -88,11 +99,18 @@ function ClienteCom(){
 		});
 		this.socket.on('juegaCarta', function(datos) { 
 			console.log("Usuario " + datos.usrid + " juega la carta con coste: "+datos.carta.coste+" elixir: "+datos.elixir);
-			usr.elixir=datos.elixir;
-			usr.cartasAtaque.push(datos.carta);
+			//limpiar();
+			cli.obtenerCartasMano();
+			cli.obtenerCartasAtaque();
+			cli.obtenerDatosRival();
+			//usr.elixir=datos.elixir;
+			//usr.cartasAtaque.push(datos.carta);
+			//mostrarAtaque(datos.carta);
 		});
-		this.socket.on('pasaTurno', function(resultado){
-           console.log("El usuario tiene turno: "+resultado);
+		this.socket.on('pasarTurno', function(datos){
+           console.log("El usuario tiene turno: "+datos.turno);
+           //cli.meToca();
+           mostrarElixir(datos.turno,datos.elixir,datos.vidas);
        	});
        	this.socket.on("respuestaAtaque",function(datos){
        		console.log(datos);
@@ -101,6 +119,12 @@ function ClienteCom(){
        	this.socket.on("respuestaAtaqueRival",function(datos){
        		console.log(datos);
        		cli.meToca();
+       	});
+       	this.socket.on("rivalAbandona",function(data){
+       		console.log("rival abandona");
+       		//mostrarInicio();
+       		abandonarPartida();
+       		//mostrar resultados
        	});
 	}
 }

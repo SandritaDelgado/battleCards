@@ -42,6 +42,9 @@ function Juego(){
 			}
 		}
 	}
+	this.eliminarPartida=function(partida){
+		this.partidas.splice(this.partidas.indexO(partida),1);
+	}
 	//aquí se construye el Juego
 	//this.crearColeccion();
 }
@@ -95,10 +98,14 @@ function Partida(nombre){
 			this.usuariosPartida[i].turno=new NoMiTurno();
 		}
 	}
-	this.finPartida=function(){
+	this.finPartida=function(usr){
 		console.log("La partida ha terminado");
 		this.fase=new Final();
 		this.quitarTurno();
+		usr.juego.eliminarPartida(this);
+	}
+	this.abandonarPartida=function(usr){
+		this.fase.abandonarPartida(usr,this);
 	}
 	this.crearTablero();
 }
@@ -117,6 +124,9 @@ function Inicial(){
 	this.usrJugarCarta=function(carta,usuario){
 		console.log("La partida no ha comenzado");
 	}
+	this.abandonarPartida=function(usr,partida){
+		partida.finPartida(usr);
+	}
 }
 
 function Jugando(){
@@ -133,6 +143,9 @@ function Jugando(){
 	this.usrAtaca=function(carta,objetivo,usuario){
 		usuario.puedeAtacar(carta,objetivo);
 	}
+	this.abandonarPartida=function(usr,partida){
+		partida.finPartida(usr);
+	}
 }
 
 function Final(){
@@ -145,6 +158,9 @@ function Final(){
 	}
 	this.usrAtaca=function(carta,obj,usuario){
 		console.log("La partida ha terminado");
+	}
+	this.abandonarPartida=function(usr,partida){
+		console.log("No se puede terminar la partida que ya esta terminada");
 	}
 }
 
@@ -196,10 +212,17 @@ function MiTurno(){
 	}
 	this.cambiarTurno=function(usr){
 		usr.turno=new NoMiTurno();
-		usr.elixir=usr.consumido+1;
+		usr.elixir=usr.elixir+usr.consumido+1;
 		usr.consumido=0;
 		usr.cartasFinTurno();
 	}
+
+	// this.cambiarTurno=function(usr){
+	// 	usr.turno=new NoMiTurno();
+	// 	usr.elixir=usr.consumido+1;
+	// 	usr.consumido=0;
+	// 	usr.cartasFinTurno();
+	// }
 	this.meToca=function(){
 		return true;
 	}
@@ -282,7 +305,7 @@ function Usuario(nombre){
 		}
 		else
 		{
-			this.partida.finPartida();
+			this.partida.finPartida(this);
 		}
 	}
 	this.fasePuedeJugarCarta=function(carta){
@@ -320,7 +343,7 @@ function Usuario(nombre){
 	}
 	this.comprobarVidas=function(){
 		if (this.vidas<=0){
-			this.partida.finPartida();
+			this.partida.finPartida(this);
 		}
 	}
 	this.manoInicial=function(){
@@ -378,6 +401,10 @@ function Usuario(nombre){
 	}
 	this.descartarCarta=function(carta){
 		carta.posicion="cementerio";
+	}
+
+	this.abandonarPartida=function(){
+		this.partida.abandonarPartida(this);
 	}
 }
 

@@ -116,6 +116,9 @@ function Partida(nombre){
 		var j=(i+1)%2;
 		return this.usuariosPartida[j];
 	}
+	this.abandonarPartida=function(usr){
+		this.fase.abandonarPartida(usr,this);
+	}
 	//this.crearTablero();
 }
 
@@ -133,6 +136,9 @@ function Inicial(){
 	this.usrJugarCarta=function(carta,usuario){
 		console.log("La partida no ha comenzado");
 	}
+	this.abandonarPartida=function(usr,partida){
+		partida.finPartida(usr);
+	}
 }
 
 function Jugando(){
@@ -149,6 +155,9 @@ function Jugando(){
 	this.usrAtaca=function(carta,objetivo,usuario){
 		usuario.puedeAtacar(carta,objetivo);
 	}
+	this.abandonarPartida=function(usr,partida){
+		partida.finPartida(usr);
+	}
 }
 
 function Final(){
@@ -161,6 +170,9 @@ function Final(){
 	}
 	this.usrAtaca=function(carta,obj,usuario){
 		console.log("La partida ha terminado");
+	}
+	this.abandonarPartida=function(usr,partida){
+		console.log("No se puede terminar la partida que ya esta terminada");
 	}
 }
 
@@ -432,6 +444,9 @@ function Usuario(nombre){
     	var json={"carta":carta,"vidas":rival.vidas};
     	return json;
     }
+    this.abandonarPartida=function(){
+		this.partida.abandonarPartida(this);
+	}
 }
 
 function Carta(nombre,vidas,ataque,coste){

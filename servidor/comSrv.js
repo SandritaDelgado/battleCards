@@ -54,7 +54,7 @@ function ComSrv(){
 				var usr=juego.usuarios[usrid];
 				if (usr){
 					//socket.emit("mano",usr.obtenerCartasMano());
-					cli.enviarRemitente(socket,"mano",{"mano":usr.obtenerCartasMano(),"elixir":usr.elixir,"vidas":usr.vidas});
+					cli.enviarRemitente(socket,"mano",{"mano":usr.obtenerCartasMano(),"turno":usr.meToca(),"elixir":usr.elixir,"vidas":usr.vidas});
 				}
 			});
 			socket.on('obtenerCartasAtaque',function(usrid,nombrePartida){
@@ -104,15 +104,34 @@ function ComSrv(){
                 	cli.enviarATodos(io,nombrePartida,"respuestaAtaqueRival",json);
                 }
 			});
+			socket.on('abandonarPartida',function(usrid,nombrePartida){
+				var usr=juego.usuarios[usrid];
+				if(usr){
+					usr.abandonarPartida();
+					cli.enviarATodosMenosRemitente(socket,nombrePartida,"rivalAbandona");
+				}
+			});
 			socket.on('pasarTurno', function(usrid, nombrePartida) {
                 var usr = juego.usuarios[usrid];
                 if (usr) {
                    usr.pasarTurno();
                    console.log(usr.nombre + " ha pasado el turno");
-                   cli.enviarRemitente(socket,"pasarTurno",usr.meToca());
+                   cli.enviarRemitente(socket,"pasarTurno",{"mano":usr.obtenerCartasMano(),"turno":usr.meToca(),"elixir":usr.elixir,"vidas":usr.vidas});
                    cli.enviarATodosMenosRemitente(socket,nombrePartida,"meToca",usr.rivalTeToca());
                 } 
            	});
+           	socket.on('retomarPartida',function(usrid,nombrePartida){
+           		var usr=juego.usuarios[usrid];
+           		var partidaId;
+           		if(usr){
+           			partidaId=usr.eligePartida(nombrePartida);
+           			if(partidaId<0){
+           				socket.join(nombrePartida);
+           				cli.enviarRemitente(socket,"aJugar",partidaId);
+           				cli.enviarATodosMenosRemitente(socket,nombrePartida,"meToca",usr.rivalTeToca());
+           			}
+           		}
+           	})
 		});
 	};
 }
