@@ -387,10 +387,10 @@ function Usuario(nombre){
 			carta=cartasAtaque.find(function(each){
 				return !each.haAtacado;
 			});
-			if (carta==undefined){
-				this.pasarTurno();
-				this.ponerNoHaAtacado();
-			}
+			// if (carta==undefined){
+			// 	this.pasarTurno();
+			// 	this.ponerNoHaAtacado();
+			// }
 		}
 	}
 	this.ponerNoHaAtacado=function(){

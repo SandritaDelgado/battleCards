@@ -258,3 +258,8 @@ function mostrarMano(datos){
 //   else
 //     $('#'+nombre).css("border","3px solid green");
 // }
+// function borrarSeleccionRival(nombre){
+// 	if(nombre){
+// 		$['id='+nombre+'']
+// 	}
+// }
