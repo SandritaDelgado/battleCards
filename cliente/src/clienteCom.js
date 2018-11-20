@@ -42,6 +42,11 @@ function ClienteCom(){
    	this.atacar=function(idCarta1,idCarta2){
    		this.socket.emit('atacar',this.usrId,this.nombrePartida,idCarta1,idCarta2);
    	}
+   	// this.atacarUsr=function(){
+   	// 	if(usr.cartasAtaque&& usr.cartaRival && usr.turno){
+   	// 		this.atacar(usr.cartasAtaque, usr.cartaRival);
+   	// 	}
+   	// }
    	this.atacarRival=function(idCarta1){
    		this.socket.emit('atacarRival',this.usrId,this.nombrePartida,idCarta1);
    	}

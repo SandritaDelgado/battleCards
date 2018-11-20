@@ -251,13 +251,12 @@ function mostrarMano(datos){
 
 // function seleccionarCarta(nombre){
 //   console.log(nombre);
-//   if ($('#'+nombre).css("border-top-color")=="rgb(0, 128, 0)")
-//   {
-//     $('#'+nombre).css("border","3px solid white");
-//   }
-//   else
-//     $('#'+nombre).css("border","3px solid green");
-// }
+// if(nombre && usr.turno){
+// 	$('#'+nombre).css("border","3px solid green");
+// 	}
+//}
+//   
+
 // function borrarSeleccionRival(nombre){
 // 	if(nombre){
 // 		$['id='+nombre+'']

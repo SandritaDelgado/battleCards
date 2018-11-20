@@ -1,12 +1,50 @@
 var _=require("underscore");
+var cf=require("./cifrado.js");
+var dao=require("./dao.js");
+var moduloEmail=require("./email.js");
+
 
 function Juego(){
 	this.cartas=[];
 	this.usuarios=[];
 	this.partidas=[];
+	this.dao=new dao.Dao();
 	this.agregarCarta=function(carta){
 		this.cartas.push(carta);
 	}
+	this.registrarUsuario=function(email,clave,callback){
+		var ju=this;
+		var claveCifrada=cf.encrypt(clave);
+		var key=(new Date().valueOf()).toString();
+		this.dao.encontrarUsuarioCriterio({email:email},function(usr){
+			if(!usr){
+				ju.dao.insertarUsuario({email:email,clave:claveCifrada,key:key,confirmada:false},function(usu){
+					moduloEmail.enviarEmail(email,key,"Haz click aqui para confirmar la cuenta");
+					callback({email:'ok'});
+				});
+			}
+			else{
+				callback({email:undefined});
+			}
+		});
+	}
+
+	this.confirmarUsuario=function(email,key,callback){
+		var ju=this;
+		this.dao.encontrarUsuarioCriterio({email:email,key:key,confirmada:false},function(usr){
+			if(usr){
+				usr.confirmada=true;
+				//actualizar la coleccion
+				ju.dao.modificarColeccionUsuarios(usr,function(data){
+					callback({res:"ok"});
+				});
+			}
+			else{
+				callback({res:"no ok"});
+			}
+		});
+	}
+
 	this.agregarUsuario=function(usuario){
 		usuario.mazo=_.shuffle(this.crearColeccion());
 		usuario.juego=this;
@@ -52,6 +90,9 @@ function Juego(){
 	this.obtenerPartidas=function(){
 		return this.partidas;
 	}
+	this.dao.conectar(function(db){
+		console.log("conectado a la base de datos");
+	})
 	//aquí se construye el Juego
 	//this.crearColeccion();
 }

@@ -14,7 +14,7 @@ var juego=new modelo.Juego();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(exp.static(__dirname + '/'));
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 
@@ -23,6 +23,25 @@ app.get('/', function(request, response) {
  response.setHeader("Content-type","text/html");
  response.send(contenido); 
  });
+
+app.post('/registrarUsuario',function(request,response){
+	var email=request.body.email;
+	var clave=request.body.clave;
+	if(!clave){
+		clave="";
+	}
+	juego.registrarUsuario(email,clave,function(data){
+		response.send(data);
+	});
+});
+
+app.get("/confirmarUsuario/:email/:key",function(request,response){
+	var email=request.params.email;
+	var key=request.params.key;
+	juego.confirmarUsuario(email,key,function(data){
+		response.send(data);
+	});
+});
 
 app.get("/agregarUsuario/:nombre",function(request,response){
 	var usr1=new modelo.Usuario(request.params.nombre);
