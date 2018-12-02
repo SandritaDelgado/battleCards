@@ -14,7 +14,7 @@ var juego=new modelo.Juego();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(exp.static(__dirname + '/'));
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 
@@ -35,11 +35,31 @@ app.post('/registrarUsuario',function(request,response){
 	});
 });
 
+app.post('/loginUsuario',function(request,response){
+	var email=request.body.email;
+	var clave=request.body.clave;
+	// if(!clave){
+	// 	clave="";
+	// }
+	//response.send({email:"ok"})
+	juego.loginUsuario(email,clave,function(data){
+		response.send(data);
+	});
+});
+
+
+
+
 app.get("/confirmarUsuario/:email/:key",function(request,response){
 	var email=request.params.email;
 	var key=request.params.key;
 	juego.confirmarUsuario(email,key,function(data){
-		response.send(data);
+		if(data.res == "ok"){
+			response.redirect("/");
+		}else{
+			response.send("La cuenta ya está activada");
+		}
+		//response.send(data);
 	});
 });
 
@@ -50,21 +70,28 @@ app.get("/agregarUsuario/:nombre",function(request,response){
 	response.send({"usr":usr1.id});
 });
 
+
 app.get("/comprobarUsuario/:usrid",function(request,response){
 	var usrid=request.params.usrid;
-	var usr=juego.usuarios[usrid];
+	var usr=juego.obtenerUsuario(usrid); //juego.usuarios[usrid];
 	var json={"partida":undefined}
-	if (usr){
+	if (usr && usr.partida){
 	    json={"partida":usr.partida.nombre};
 	}
 	response.send(json);
 });
 
+app.delete("/eliminarUsuario/:uid",function(request,response){
+    var uid=request.params.uid;
+    juego.eliminarUsuario(uid,function(result){
+        response.send(result);
+    });
+});
 
 app.get("/crearPartida/:usrid/:nombre",function(request,response){
 	var usrid=request.params.usrid;
 	var partida=request.params.nombre;
-	var usr=juego.usuarios[usrid];
+	var usr=juego.obtenerUsuario(usrid);
 	var partidaId=-1;
 	if (usr){
 		partidaId=usr.crearPartida(partida);
@@ -89,7 +116,7 @@ app.get('/obtenerPartidas', function(request, response) {
 app.get("/elegirPartida/:usrid/:nombre",function(request,response){
 	var usrid=request.params.usrid;
 	var partida=request.params.nombre;
-	var usr=juego.usuarios[usrid]; 
+	var usr=juego.obtenerUsuario(usrid); 
 	var partidaId=-1;
 	if (usr){
 		partidaId=usr.eligePartida(partida);
@@ -99,7 +126,7 @@ app.get("/elegirPartida/:usrid/:nombre",function(request,response){
 
 app.get("/obtenerCartasMano/:usrid",function(request,response){
 	var usrid=request.params.usrid;
-	var usr=juego.usuarios[usrid];
+	var usr=juego.obtenerUsuario(usrid);
 	var json=[];
 	if (usr){
 		var coleccion=usr.obtenerCartasMano();
@@ -115,7 +142,7 @@ app.get("/obtenerCartasMano/:usrid",function(request,response){
 app.get("/jugarCarta/:usrid/:cartaid", function(request,response) {
     var usrid   = request.params.usrid;
     var cartaid = request.params.cartaid;
-    var usr     = juego.usuarios[usrid]; //juego.obtenerUsuario(usrid)
+    var usr     = juego.obtenerUsuario(usrid); //juego.obtenerUsuario(usrid)
     if (usr){
    	    var carta   = usr.obtenerCartaMano(cartaid);
 	    usr.jugarCarta(carta);
@@ -126,8 +153,6 @@ app.get("/jugarCarta/:usrid/:cartaid", function(request,response) {
     	response.send({"posicion":-1});
     }
 });
-
-
 
 //console.log("Servidor escuchando en "+host+":"+port);
 server.listen(app.get('port'), function() {

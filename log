@@ -1,0 +1,29 @@
+2018-11-12T10:50:06.836353+00:00 app[api]: Initial release by user jramtor97@gmail.com
+2018-11-12T10:50:06.955848+00:00 app[api]: Enable Logplex by user jramtor97@gmail.com
+2018-11-12T10:50:06.955848+00:00 app[api]: Release v2 created by user jramtor97@gmail.com
+2018-11-12T10:50:06.836353+00:00 app[api]: Release v1 created by user jramtor97@gmail.com
+2018-11-12T11:10:15.000000+00:00 app[api]: Build started by user jramtor97@gmail.com
+2018-11-12T11:10:30.971818+00:00 app[api]: Deploy 6ca586e3 by user jramtor97@gmail.com
+2018-11-12T11:10:30.986590+00:00 app[api]: Scaled to web@1:Free by user jramtor97@gmail.com
+2018-11-12T11:10:30.971818+00:00 app[api]: Release v3 created by user jramtor97@gmail.com
+2018-11-12T11:10:34.226429+00:00 heroku[web.1]: Starting process with command `npm start`
+2018-11-12T11:10:31.000000+00:00 app[api]: Build succeeded
+2018-11-12T11:10:37.706171+00:00 heroku[web.1]: State changed from starting to crashed
+2018-11-12T11:10:37.781229+00:00 heroku[web.1]: State changed from crashed to starting
+2018-11-12T11:10:37.686033+00:00 heroku[web.1]: Process exited with status 1
+2018-11-12T11:10:37.563816+00:00 app[web.1]: npm ERR! missing script: start
+2018-11-12T11:10:37.591430+00:00 app[web.1]: 
+2018-11-12T11:10:37.591938+00:00 app[web.1]: npm ERR! A complete log of this run can be found in:
+2018-11-12T11:10:37.592165+00:00 app[web.1]: npm ERR!     /app/.npm/_logs/2018-11-12T11_10_37_565Z-debug.log
+2018-11-12T11:10:43.763750+00:00 heroku[web.1]: Starting process with command `npm start`
+2018-11-12T11:10:46.110510+00:00 heroku[web.1]: State changed from starting to crashed
+2018-11-12T11:10:46.088785+00:00 heroku[web.1]: Process exited with status 1
+2018-11-12T11:10:46.030683+00:00 app[web.1]: npm ERR! missing script: start
+2018-11-12T11:10:46.039297+00:00 app[web.1]: 
+2018-11-12T11:10:46.039682+00:00 app[web.1]: npm ERR! A complete log of this run can be found in:
+2018-11-12T11:10:46.039906+00:00 app[web.1]: npm ERR!     /app/.npm/_logs/2018-11-12T11_10_46_033Z-debug.log
+2018-11-12T11:12:19.423344+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=battlecardsgame0.herokuapp.com request_id=ee29aa19-aa5b-458b-85c4-68b41443a0d2 fwd="161.67.174.44" dyno= connect= service= status=503 bytes= protocol=https
+2018-11-12T11:12:19.848964+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=battlecardsgame0.herokuapp.com request_id=c01040ec-3ef9-42cd-93a8-03850af28143 fwd="161.67.174.44" dyno= connect= service= status=503 bytes= protocol=https
+2018-11-12T11:12:33.307995+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=battlecardsgame0.herokuapp.com request_id=000f34e9-96f7-450c-9633-e47803442326 fwd="161.67.174.44" dyno= connect= service= status=503 bytes= protocol=https
+2018-11-12T11:12:34.305305+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=battlecardsgame0.herokuapp.com request_id=3ac7c954-ec79-401e-a886-00ef79db906a fwd="161.67.174.44" dyno= connect= service= status=503 bytes= protocol=https
+2018-11-12T11:12:34.692233+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=battlecardsgame0.herokuapp.com request_id=949886ec-8152-407e-861b-6ee09882c49d fwd="161.67.174.44" dyno= connect= service= status=503 bytes= protocol=https

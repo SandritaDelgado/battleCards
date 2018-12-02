@@ -11,14 +11,17 @@ function limpiar(){
   $('#mostrarElixir').remove();
   $('#mostrarMano').remove()
   $('#mostrarEsperando').remove();
+  $('#msg').remove();
 }
 
 function comprobarUsuario(){
   if ($.cookie("usr")){
-    rest.comprobarUsuario($.cookie("usr"));
+    var usr=JSON.parse($.cookie("usr"));
+    rest.comprobarUsuario(usr._id);
   }
   else{
-    mostrarFormularioNombre();
+    //mostrarFormularioNombre();
+    mostrarLogin();
   }
 }
 function abandonarPartida(){
@@ -45,6 +48,92 @@ function mostrarFormularioNombre(){
         }
         $('#formInicio').remove();
         rest.agregarUsuario(nombre);
+     });
+}
+
+function mostrarLogin(){
+  limpiar();
+  var cadena='<div id="formInicio">';
+  cadena=cadena+'<h3>Iniciar sesión</h3>';
+  cadena=cadena+'<label for="email">Email:</label>'
+  cadena=cadena+'<div class="input-group">'
+  //cadena=cadena+'<label for="email">Email:</label>'
+  cadena=cadena+'<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>';
+  //cadena=cadena+'<label for="email">Email:</label>'
+  cadena=cadena+'<input id="email" type="text" class="form-control" name="email" placeholder="Email usuario">';
+  cadena=cadena+'</div>';
+  cadena=cadena+'<label for="email">Contraseña:</label>'
+  cadena=cadena+'<div class="input-group">';
+  cadena=cadena+'<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>';
+  cadena=cadena+'<input id="clave" type="text" class="form-control" name="clave" placeholder="Contraseña">';
+  cadena=cadena+'</div>';
+  cadena=cadena+'<div class="checkbox">'
+  cadena=cadena+'<label><input type="checkbox"> Recordarme</label>'
+  cadena=cadena+'</div>';
+  cadena=cadena+'<button type="button" id="loginBtn" class="btn btn-default btn-md">Iniciar usuario</button>';
+  cadena=cadena+'<div id="aviso"></div>';
+  cadena=cadena+'</div>';
+
+  
+  $('#inicio').append(cadena);
+
+  $('#loginBtn').on('click',function(){
+        var email=$('#email').val();
+        var clave=$('#clave').val();
+        if (email=="" && clave==""){
+          mostrarLogin();
+          mostrarAviso("Escribe tu correo");
+        }
+        else{
+          $('#formInicio').remove();
+          rest.loginUsuario(email,clave);
+        }
+     });
+}
+function mostrarAviso(msg){
+  $('#msg').remove();
+  $('#aviso').append("<div id='msg'>"+msg+"</div>");
+}
+function mostrarRegistro(){
+  limpiar();
+  var cadena='<div id="formInicio">';
+  cadena=cadena+'<h3>Registro de usuarios</h3>';
+  cadena=cadena+'<label for="email">Email:</label>'
+  cadena=cadena+'<div class="input-group">'
+  cadena=cadena+'<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>';
+  cadena=cadena+'<input id="email" type="text" class="form-control" name="email" placeholder="Email usuario">';
+  cadena=cadena+'</div>';
+  cadena=cadena+'<label for="email">Repite Email:</label>'
+  cadena=cadena+'<div class="input-group">';
+  cadena=cadena+'<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>';
+  cadena=cadena+'<input id="email2" type="text" class="form-control" name="email2" placeholder="Email usuario">';
+  cadena=cadena+'</div>';
+  cadena=cadena+'<label for="email">Contraseña:</label>'
+  cadena=cadena+'<div class="input-group">';
+  cadena=cadena+'<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>';
+  cadena=cadena+'<input id="clave" type="password" class="form-control" name="clave" placeholder="Contraseña">';
+  cadena=cadena+'</div>';
+  cadena=cadena+'<div class="checkbox">'
+  cadena=cadena+'<label><input id="checkbox-p" type="checkbox" required>Acepta nuestros Términos & Privacidad</label>'
+  cadena=cadena+'</div>';
+  cadena=cadena+'<button type="button" id="regBtn" class="btn btn-default btn-md">Registrar usuario</button>';
+  cadena=cadena+'<div id="aviso"></div>';
+  cadena=cadena+'</div>';
+  
+  $('#inicio').append(cadena);
+
+  $('#regBtn').on('click',function(){
+        var email=$('#email').val();
+        var email2=$('#email2').val();
+        var clave=$('#clave').val();
+        //document.getElementById("checkbox-p").required = true;
+        if (email==email2 && clave!=""){
+          rest.registrarUsuario(email,clave); //No se seguir
+        }
+        else{
+          
+          mostrarAviso("Email o contraseña incorrectos");
+        }
      });
 }
 
@@ -251,14 +340,10 @@ function mostrarMano(datos){
 
 // function seleccionarCarta(nombre){
 //   console.log(nombre);
-// if(nombre && usr.turno){
-// 	$('#'+nombre).css("border","3px solid green");
-// 	}
-//}
-//   
-
-// function borrarSeleccionRival(nombre){
-// 	if(nombre){
-// 		$['id='+nombre+'']
-// 	}
+//   if ($('#'+nombre).css("border-top-color")=="rgb(0, 128, 0)")
+//   {
+//     $('#'+nombre).css("border","3px solid white");
+//   }
+//   else
+//     $('#'+nombre).css("border","3px solid green");
 // }
