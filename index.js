@@ -154,6 +154,28 @@ app.get("/jugarCarta/:usrid/:cartaid", function(request,response) {
     }
 });
 
+app.get('/obtenerKeyUsuario/:email',function(request,response){
+	var email=request.params.email;
+	if (email=="patata@patata.es"){
+		juego.obtenerKey(email,function(data){
+			response.send(data);
+		});
+	}
+});
+
+app.put("/actualizarUsuario",function(request,response){
+    juego.actualizarUsuario(request.body,function(result){
+            response.send(result);
+        });
+});
+
+app.delete("/eliminarUsuario/:uid",function(request,response){
+    var uid=request.params.uid;
+    juego.eliminarUsuario(uid,function(result){
+        response.send(result);
+    });
+});
+
 //console.log("Servidor escuchando en "+host+":"+port);
 server.listen(app.get('port'), function() {
  console.log('Node app is running on port', app.get('port'));

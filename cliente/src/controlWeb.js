@@ -21,7 +21,8 @@ function comprobarUsuario(){
   }
   else{
     //mostrarFormularioNombre();
-    mostrarLogin();
+   // mostrarLogin();
+   mostrarCabecera();
   }
 }
 function abandonarPartida(){
@@ -137,6 +138,58 @@ function mostrarRegistro(){
      });
 }
 
+function actualizarUsuario(){
+limpiar();
+  var uid;
+  if ($.cookie("usr")!=undefined){
+    var usr=JSON.parse($.cookie("usr"));
+    uid=usr._id;
+  }
+  if(uid!=undefined)
+  {
+  var cadena = '<div id="formInicio">';
+    cadena = cadena + '<h3>Actualizar datos del usuario</h3>';
+    cadena = cadena + '<table class="table">';
+    cadena = cadena + '<tr><td><label>Email: </label></td><td><label>'+usr.email+'</label></td></tr>';
+    cadena = cadena + '<tr><td><label>Clave anterior: </label></td><td><input type="password" id="oldpass" class="form-control" placeholder="Clave anterior:"></span></td></tr>';
+    cadena = cadena + '<tr><td><label>Nueva clave: </label></td><td><input type="password" id="newpass" class="form-control" placeholder="Introduce tu nueva clave"></td></tr>';
+    cadena = cadena + '<tr><td><label>Repite la nueva clave </label></td><td><input type="password" id="newpass2" class="form-control" placeholder="Repite la nueva clave"></td></tr></table> ';
+    cadena = cadena + '<p><button type="button" id="actualizarBtn" class="btn btn-primary btn-md">Actualizar usuario</button> <button type="button" id="eliminarBtn" class="btn btn-danger btn-md">Eliminar usuario</button></div>';
+    cadena = cadena + '<h4 id="info"><span class="label label-warning"></span></h4>';
+    $('#inicio').append(cadena);
+    $('#actualizarBtn').on('click',function(){
+      var oldpass=$('#oldpass').val();
+      var newpass=$('#newpass').val();
+      var newpass2=$('#newpass2').val();
+console.log("sdfasdfjsadjf"+""+oldpass+""+newpass+""+newpass2);
+      if (oldpass=="" && newpass=="" && newpass2==""){
+        mostrarAviso("No hay nada que modificar");
+      }
+      else{
+        $('#actualizarBtn').remove();   
+        rest.actualizarUsuario(oldpass,newpass,newpass2);
+        mostrarAviso("Usuario actualizado");
+      }
+    });
+    $('#eliminarBtn').on('click',function(){
+      var oldpass=$('#oldpass').val();
+      if (oldpass!=""){
+        //var clave=$('#clave').val();
+        $('#nombre').remove();
+        $('#eliminarBtn').remove();   
+        rest.eliminarUsuario();
+      }
+      else
+        mostrarAviso('Introduce tu clave');
+    });
+  }
+  else{
+    mostrarLogin();
+  }
+}
+
+
+
 function mostrarCrearPartida(){
 	var cadena='<div id="formCrearPartida">';
 	cadena=cadena+'<h3>Crear partida</h3>';
@@ -165,10 +218,7 @@ function mostrarInicio(){
 }
 
 function mostrarCabecera(){
-  $("#granCabecera").remove();
-  var cadena='<div class="jumbotron text-center" id="granCabecera">';
-  cadena=cadena+'<h1>BattleCards Game</h1>';
-  cadena=cadena+'<p>El juego de cartas</p></div>';
+  var cadena;
   $("#cabecera").append(cadena);
 }
 
@@ -212,7 +262,7 @@ function eliminarGif(){
 
 function mostrarRival(elixir,vidas){
   $('#mostrarRival').remove();
-  var cadena='<div id="mostrarRival"><h3>Rival - Elixir:' + elixir+ ' - Vidas:'+ vidas + '</h3></div>';
+  var cadena='<div id="mostrarRival"><h3>Rival - Elixir: ' + elixir + ' - Vidas: '+ vidas + '</h3></div>';
   $('#rival').append(cadena);
 }
 
@@ -296,11 +346,12 @@ function mostrarAtaque(datos){
 function mostrarElixir(turno,elixir,vidas){
 
 	$('#mostrarElixir').remove();
-	var cadena='<div id="mostrarElixir"><h3>Turno: ' + turno + '- Elixir: ' + elixir + ' - Vidas: ' + vidas + '</h3>'
-	cadena=cadena+ '<button type="button" class="btn btn-warning" onclick="abandonarPartida()">Abandonar Partida</button>';
-	cadena=cadena+'<button type="button" class="btn btn-primary" onclick="com.pasarTurno()">Pasar turno</button>';
-	cadena=cadena+'<button type="button" class="btn btn-primary" onclick="atacar()">Atacar</button>';
-	cadena=cadena+'</div';
+	var cadena='<div id="mostrarElixir"><h3>Turno: ' + turno + ' - Elixir: ' + elixir + ' - Vidas: ' + vidas + '</h3>'
+  cadena=cadena+'<div class="col-md-10"><div class="row">';
+	cadena=cadena+'<div class="col-md-3"><button type="button" class="btn btn-warning" onclick="abandonarPartida()">Abandonar Partida</button></div>';
+	cadena=cadena+'<div class="col-md-3"><button type="button" class="btn btn-dark" onclick="com.pasarTurno()">Pasar turno</button></div>';
+	cadena=cadena+'<div class="col-md-3"><button type="button" class="btn btn-primary" onclick="atacar()">Atacar</button></div>';
+	cadena=cadena+'</div></div';
 	$('#elixir').append(cadena);
 }
 
@@ -309,7 +360,7 @@ function atacar(){
 		com.atacar(com.carta1,com.carta2);
 }
 
-function mostrarMano(datos){
+/*function mostrarMano(datos){
   $('#mostrarMano').remove();
   var numCol=Math.round(12/(datos.length));
   $('#mostrarMano').remove();
@@ -336,14 +387,26 @@ function mostrarMano(datos){
     console.log(nombreCarta);
     com.jugarCarta(nombreCarta);
   });
-}
+}*/
+function mostrarMano(datos){
+  $('#mostrarMano').remove();
+  var numCol=Math.round(12/(datos.length));
+  $('#mostrarMano').remove();
+  var cadena='<div id="mostrarMano" class="panel panel-default"><div class="panel-body">';
+  //cadena=cadena+'<div class="col-md-'+numCol+'"></div>';
+  for(var i=0;i<datos.length;i++){
+    cadena=cadena+'<div class="col-md-'+numCol+'">';
+    cadena=cadena+'<div class="thumbnail">';
+    cadena=cadena+'<img src="cliente/img/'+datos[i].nombre+'.png" name="manita" title="coste '+datos[i].coste+' ataque '+datos[i].ataque+'" class="img-rounded" id="'+datos[i].nombre+'" style="width:100%">';
+    cadena=cadena+'</div></div>'
+  }
+  cadena=cadena+'</div></div>';
+  $('#mano').append(cadena);
 
-// function seleccionarCarta(nombre){
-//   console.log(nombre);
-//   if ($('#'+nombre).css("border-top-color")=="rgb(0, 128, 0)")
-//   {
-//     $('#'+nombre).css("border","3px solid white");
-//   }
-//   else
-//     $('#'+nombre).css("border","3px solid green");
-// }
+  $('[name=manita]').dblclick(function(){
+    var nombreCarta=$(this).attr("id");
+    console.log(nombreCarta);
+    //seleccionarCarta(nombreCarta);
+    com.jugarCarta(nombreCarta);
+  });
+}

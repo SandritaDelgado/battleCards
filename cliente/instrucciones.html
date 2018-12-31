@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instrucciones</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+</head>
+
+
+<style type="text/css">
+	.navbar {
+  background-color: #9b59b6;
+}
+.navbar .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
+  color: #ecdbff;
+}
+.navbar .navbar-text {
+  color: #ecf0f1;
+}
+.navbar .navbar-text a {
+  color: #ecdbff;
+}
+.navbar .navbar-text a:hover,
+.navbar .navbar-text a:focus {
+  color: #ecdbff; 
+}
+.navbar .navbar-nav .nav-link {
+  color: #ecf0f1;
+  border-radius: .25rem;
+  margin: 0 0.25em;
+}
+.navbar .navbar-nav .nav-link:not(.disabled):hover,
+.navbar .navbar-nav .nav-link:not(.disabled):focus {
+  color: #ecdbff;
+}
+.navbar .navbar-nav .nav-item.active .nav-link,
+.navbar .navbar-nav .nav-item.active .nav-link:hover,
+.navbar .navbar-nav .nav-item.active .nav-link:focus,
+.navbar .navbar-nav .nav-item.show .nav-link,
+.navbar .navbar-nav .nav-item.show .nav-link:hover,
+.navbar .navbar-nav .nav-item.show .nav-link:focus {
+  color: #ecdbff;
+  background-color: #8e44ad;
+}
+.navbar .navbar-toggle {
+  border-color: #8e44ad;
+}
+.navbar .navbar-toggle:hover,
+.navbar .navbar-toggle:focus {
+  background-color: #8e44ad;
+}
+.navbar .navbar-toggle .navbar-toggler-icon {
+  color: #ecf0f1;
+}
+.navbar .navbar-collapse,
+.navbar .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar .navbar-link {
+  color: #ecf0f1;
+}
+.navbar .navbar-link:hover {
+  color: #ecdbff;
+}
+
+@media (max-width: 575px) {
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #8e44ad;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #8e44ad;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #8e44ad;
+  }
+}
+
+@media (max-width: 1199px) {
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #ecdbff;
+  }
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #ecdbff;
+    background-color: #8e44ad;
+  }
+}
+
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+  color: #ecf0f1;
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+  color: #ecdbff;
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+  color: #ecdbff;
+  background-color: #8e44ad;
+}
+</style>
+
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Home</a>
+			</div>
+		</div>
+	</nav>
+	<div class="jumbotron" style="background: url(img/imagenjumbotron.jpg) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <h1 class="display-1 font-weight-bold text-light">Como jugar</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+    	<div class="row card-deck">
+    		<div class="card text-dark bg-light mb-3">
+    			<div class="card-header" style="color:blue">
+    				<a><strong>Pasos a seguir</strong></a>
+    			</div>
+    			<div class="card-body">
+    				<p class="card-text">Para poder comenzar una apasionante batalla lo que debes hacer es leer atentamente estas instrucciones:</br>
+    				1- Lo primero que debemos hacer es REGISTRARNOS.</br>
+    				2- Una vez, estemos registrados pasamos a INICIAR SESION</br>
+    				3- El primer jugador, una vez logueado, CREA LA PARTIDA </br>
+    				4- El segundo jugador, una vez logueado, se UNE A LA PARTIDA</br>
+    				5- Se repartirán las cartas y solo se podrá a JUGAR LA CARTA si tiene coste 1, normalmente suelen ser las cartas ESBIRROS.</br>
+					6- El jugador que tenga el turno hace doble click sobre la carta elegida y dicha carta se pone en la zona de ataque. Y el jugador 1 tiene que pasar turno pulsando sobre el boton PASAR TURNO.</br>
+					7- El jugador 2 ya tiene el turno y realiza lo mismo, hace doble click en la carta que quiere jugar. Y pasa turno pulsando sobre el boton PASAR TURNO. </br>
+					8- Una vez que las cartas esten la zona de ataque el jugador que tenga el turno las selecciona y pulsa el boton de ATACAR. </br>
+					9- Aumentara el elixir y las vidas iran reduciendose, seguir asi toda la partida hasta quedarse sin vida.</br></br>
+
+					<strong><i>CONSEJOS:</i></strong></br>
+					Como las cartas no son dinamicas, para saber que carta puedes jugar si ponemos el raton encima de la imagen de la carta aparece el coste y el ataque para poder jugar la carta el elixir coincide con el coste de la carta, por tanto solo podras jugar si el coste de la carta es igual o mayor a tu elixir.
+
+					</p>
+				</div>
+			</div>
+			<div class="card text-dark bg-light mb-3">
+				<div class="card-header" style="color:green">
+					<a class="link" href="https://www.youtube.com/watch?v=W9P_qUnMaFg" ><strong>Demo</strong></a>
+			</div>
+			<div class="card-body">
+				<p class="card-text">En esta demo podras ver una partida de cartas para que el aprendizaje sea mejor.</p>
+			</div>
+		</div>
+	</div>
+</div>
+    
+
+</body>
+</html>

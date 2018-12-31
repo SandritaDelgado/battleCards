@@ -113,4 +113,25 @@ function ClienteRest(){
 	  });
 	}
 
+	this.actualizarUsuario=function(oldpass,newpass,newpass2){
+	  var usr=JSON.parse($.cookie("usr"));
+	  var nivel=usr.nivel;
+	 $.ajax({
+	    type:'PUT',
+	    url:'/actualizarUsuario',
+	    data:JSON.stringify({uid:usr._id,email:usr.email,oldpass:oldpass,newpass:newpass,newpass2:newpass2}),
+	    success:function(data){
+	      if (!data.email){
+	        mostrarRegistro();
+	      }
+	      else{
+	        $.cookie("usr",JSON.stringify(data));
+	        mostrarListaPartidas(data);
+	      }
+	      },
+	    contentType:'application/json',
+	    dataType:'json'
+	  });
+	}
+
 }

@@ -6,8 +6,8 @@ describe("El juego de las cartas...", function() {
 
   beforeEach(function() {
     juego=new modelo.Juego();
-    usr1=new modelo.Usuario("pepe");
-    usr2=new modelo.Usuario("juan");
+    usr1=new modelo.Usuario("pepe",0);
+    usr2=new modelo.Usuario("juan",1);
     miturno=new modelo.MiTurno();
     nomiturno=new modelo.NoMiTurno();
     juego.agregarUsuario(usr1);
@@ -19,7 +19,7 @@ describe("El juego de las cartas...", function() {
   describe("Comprobar la fase inicial del juego",function(){
 	  it("Compruebo condiciones iniciales (cartas, partidas, usuario)", function() {
 	    expect(juego.usuarios).toBeDefined();
-	    expect(juego.usuarios.length).toEqual(2);
+	    expect(Object.keys(juego.usuarios).length).toEqual(2);
 	    expect(juego.partidas).toBeDefined();
 	    expect(juego.partidas.length).toEqual(0);
 	    //expect(juego.partidas[0].fase.nombre).toEqual("jugando");
@@ -42,7 +42,7 @@ describe("El juego de las cartas...", function() {
 
 	  it("Compruebo condiciones iniciales (cartas, partidas, usuario)", function() {
 	    expect(juego.usuarios).toBeDefined();
-	    expect(juego.usuarios.length).toEqual(2);
+	    expect(Object.keys(juego.usuarios).length).toEqual(2);
 	    expect(juego.partidas).toBeDefined();
 	    expect(juego.partidas.length).toEqual(1);
 	    expect(juego.partidas[0].fase.nombre).toEqual("jugando");
@@ -222,8 +222,8 @@ describe("El juego de las cartas...", function() {
 	      expect(usr1.turno.meToca()).toEqual(true);
 	      expect(usr2.turno.meToca()).toEqual(false);
 	      usr1.ataque(carta2,usr2);
-	      expect(usr1.turno.meToca()).toEqual(false);
-	      expect(usr2.turno.meToca()).toEqual(true);     
+	      expect(usr1.turno.meToca()).toEqual(true);
+	      expect(usr2.turno.meToca()).toEqual(false);     
 	    });
 	    it ("Si el numero de cartas excede el maximo de capacidad al final del turno se descartan las cartas sobrantes", function(){
 	      //Establecemos el turno para usr1

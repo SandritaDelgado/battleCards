@@ -12,11 +12,13 @@ function Juego(){
 		this.cartas.push(carta);
 	}
 	this.obtenerUsuario=function(id){
-		return _.find(this.usuarios,function(usu){
+		/*return _.find(this.usuarios,function(usu){
 			return usu.id==id
-		});
+			});*/
+			return this.usuarios[id];
+		
 	}
-	this.eliminarUsuario=function(uid,callback){
+this.eliminarUsuario=function(uid,callback){
 		var json={'resultados':-1};
 		//if (ObjectID.isValid(uid)){
 			this.dao.eliminarUsuario(uid,function(result){
@@ -33,6 +35,27 @@ function Juego(){
 	    //else{
 	    //	callback(json);
 	    //}
+	}
+	this.actualizarUsuario=function(nuevo,callback){
+		//this.comprobarCambios(nuevo);
+		//var usu=this;
+		var oldC=cf.encrypt(nuevo.oldpass);
+		var newC=cf.encrypt(nuevo.newpass);
+		var pers=this.dao;
+	this.dao.encontrarUsuarioCriterio({email:nuevo.email},function(usr){
+			if(usr){
+				if (nuevo.newpass!="" && nuevo.newpass==nuevo.newpass2){
+					usr.clave=newC;
+				}
+		        pers.modificarColeccionUsuarios(usr,function(nusu){
+		               console.log("Usuario modificado");
+		               callback(usr);
+		        });
+		    }
+		    else{
+		    	callback({email:undefined});	
+		    }
+		});
 	}
 
 	this.registrarUsuario=function(email,clave,callback){
@@ -71,6 +94,19 @@ function Juego(){
     	});
 
 	}
+
+	this.obtenerKey=function(email,callback){
+		var ju=this;
+		this.dao.encontrarUsuarioCriterio({email:email,confirmada:false},function(usr){
+			if(usr){
+				callback({key:usr.key})
+			}
+			else{
+				callback({key:undefined});
+			}
+		});
+	}
+
 	this.confirmarUsuario=function(email,key,callback){
 		var ju=this;
 		this.dao.encontrarUsuarioCriterio({email:email,key:key,confirmada:false},function(usr){
@@ -89,7 +125,7 @@ function Juego(){
 	this.agregarUsuario=function(usuario){
 		usuario.mazo=_.shuffle(this.crearColeccion());
 		usuario.juego=this;
-		this.usuarios.push(usuario);
+		this.usuarios[usuario.id]=usuario;
 		//usuario.id=this.usuarios.length-1;
 	}
 	this.crearColeccion=function(){

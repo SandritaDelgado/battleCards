@@ -12,7 +12,7 @@ function Dao(){
 	};
     
 	this.eliminarUsuario=function(uid,callback){
-        eliminar(this.usuariosCol,{_id:ObjectID(uid)},callback);
+        eliminar(this.usuarios,{_id:ObjectID(uid)},callback);
     }
 
  function eliminar(coleccion,criterio,callback){
@@ -69,7 +69,7 @@ function Dao(){
 
 	this.conectar=function(callback){
         var dao=this;
-        mongo.connect("mongodb://pepe:pepito1@ds055842.mlab.com:55842/battlecards",{useNewUrlParser: true},function(err, database) {
+        mongo.connect("mongodb://admin:admin1234@ds251727.mlab.com:51727/battlecards",{useNewUrlParser: true},function(err, database) {
             if (err){
                 console.log("No pudo conectar a la base de datos")
             }
@@ -86,8 +86,10 @@ function Dao(){
           
                         dao.usuarios=col;   
                     }
-                    //db.close();
+                    
                 });
+                //para heroku hay que comentarlo
+                //db.close(); 
                 callback(database);
             }
 
