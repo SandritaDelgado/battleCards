@@ -66,7 +66,7 @@ function mostrarLogin(){
   cadena=cadena+'<label for="email">Contraseña:</label>'
   cadena=cadena+'<div class="input-group">';
   cadena=cadena+'<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>';
-  cadena=cadena+'<input id="clave" type="text" class="form-control" name="clave" placeholder="Contraseña">';
+  cadena=cadena+'<input id="clave" type="password" class="form-control" name="clave" placeholder="Contraseña">';
   cadena=cadena+'</div>';
   cadena=cadena+'<div class="checkbox">'
   cadena=cadena+'<label><input type="checkbox"> Recordarme</label>'
@@ -392,8 +392,8 @@ function mostrarMano(datos){
   $('#mostrarMano').remove();
   var numCol=Math.round(12/(datos.length));
   $('#mostrarMano').remove();
-  var cadena='<div id="mostrarMano" class="panel panel-default"><div class="panel-body">';
-  //cadena=cadena+'<div class="col-md-'+numCol+'"></div>';
+   var cadena='<div id="mostrarMano" class="panel panel-default"><div class="panel-body">';
+  
   for(var i=0;i<datos.length;i++){
     cadena=cadena+'<div class="col-md-'+numCol+'">';
     cadena=cadena+'<div class="thumbnail">';

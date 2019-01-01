@@ -130,16 +130,16 @@ this.eliminarUsuario=function(uid,callback){
 	}
 	this.crearColeccion=function(){
 		var mazo=[];
-		//10 ataque 5 coste 3 vida 5
-		for (var i=0;i<10;i++){
+		//5 ataque 5 coste 3 vida 5
+		for (var i=0;i<5;i++){
 			mazo.push(new Carta("Dragon"+i, 5, 5,3));
 		}
-		//10 ataque 3 coste 2 vida 3
-		for (var i=0;i<10;i++){
+		//5 ataque 3 coste 2 vida 3
+		for (var i=0;i<5;i++){
 			mazo.push(new Carta("Guerrero"+i, 3, 3,2));
 		}
-		//10 ataque 2 coste 1 vida 2
-		for (var i=0;i<10;i++){
+		//5 ataque 2 coste 1 vida 2
+		for (var i=0;i<5;i++){
 			mazo.push(new Carta("Esbirro"+i, 2, 2,1));
 		}
 		return mazo;
