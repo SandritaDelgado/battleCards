@@ -50,9 +50,9 @@ describe("El juego de las cartas...", function() {
 
 	  it("Los usuarios tienen un mazo", function(){
 	    expect(usr1.mazo).toBeDefined();
-	    expect(usr1.mazo.length).toEqual(30);
+	    expect(usr1.mazo.length).toEqual(15);
 	    expect(usr2.mazo).toBeDefined();
-	    expect(usr2.mazo.length).toEqual(30);
+	    expect(usr2.mazo.length).toEqual(15);
 	    });
 
 	    it("Los usuarios tiene mano (5 o 6 cartas)", function(){
@@ -81,9 +81,9 @@ describe("El juego de las cartas...", function() {
 	    //juego.agregarUsuario(usr2);
 	    expect(juego.usuarios.length).toEqual(2);
 	    expect(juego.usuarios[0].nombre).toEqual("pepe");
-	    expect(usr1.mazo.length).toEqual(30);
+	    expect(usr1.mazo.length).toEqual(15);
 	    expect(juego.usuarios[1].nombre).toEqual("juan");
-	    expect(usr2.mazo.length).toEqual(30);
+	    expect(usr2.mazo.length).toEqual(15);
 	    });
 
 	   it("Pepe crea una partida, juan la elige y se les asigna las zonas correspondientes", function(){
@@ -244,4 +244,3 @@ describe("El juego de las cartas...", function() {
 	    });
   });
 });
-
