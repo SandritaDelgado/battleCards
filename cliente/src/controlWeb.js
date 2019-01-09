@@ -88,6 +88,7 @@ function mostrarLogin(){
         else{
           $('#formInicio').remove();
           rest.loginUsuario(email,clave);
+          mostrarAviso("Email o contraseña incorrectos");
         }
      });
 }
@@ -262,8 +263,16 @@ function eliminarGif(){
 
 function mostrarRival(elixir,vidas){
   $('#mostrarRival').remove();
-  var cadena='<div id="mostrarRival"><h3>Rival - Elixir: ' + elixir + ' - Vidas: '+ vidas + '</h3></div>';
+  var cadena='<div id="mostrarRival"><h3>Rival - Elixir: ' + elixir + ' - Vidas: '+ vidas + '</h3>'+'<img src="cliente/img/rival.jpg" class="img-rounded" name="rival" id="rivalimg" style="width:20%">'+'</div>';
   $('#rival').append(cadena);
+
+   $('[name="rival"]').click(function(){
+    var nombreCarta=$(this).attr("id");
+    console.log(nombreCarta);
+    // com.carta2=nombreCarta;
+    com.atacarRival(com.carta1);
+    //com.jugarCarta(nombreCarta);
+  });
 }
 
 function mostrarAtaqueRival(datos){
@@ -346,7 +355,8 @@ function mostrarAtaque(datos){
 function mostrarElixir(turno,elixir,vidas){
 
 	$('#mostrarElixir').remove();
-	var cadena='<div id="mostrarElixir"><h3>Turno: ' + turno + ' - Elixir: ' + elixir + ' - Vidas: ' + vidas + '</h3>'
+
+	var cadena='<div id="mostrarElixir"><h3>Turno: ' + turno + ' - Elixir: ' + elixir + ' - Vidas: ' + vidas + '</h3>'+'<img src="cliente/img/jugador.jpg" class="img-rounded" name="manita" id="jugador" style="width:20%">'
   cadena=cadena+'<div class="col-md-10"><div class="row">';
 	cadena=cadena+'<div class="col-md-3"><button type="button" class="btn btn-warning" onclick="abandonarPartida()">Abandonar Partida</button></div>';
 	cadena=cadena+'<div class="col-md-3"><button type="button" class="btn btn-dark" onclick="com.pasarTurno()">Pasar turno</button></div>';
@@ -409,4 +419,13 @@ function mostrarMano(datos){
     //seleccionarCarta(nombreCarta);
     com.jugarCarta(nombreCarta);
   });
+}
+
+function comprobarFin(msg){
+  if (msg=="final"){
+    $('#msgFinal').modal();
+    $('#modalBtn').on('click',function(){
+      abandonarPartida();
+    })
+  }
 }

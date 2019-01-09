@@ -114,10 +114,14 @@ function ClienteCom(){
        	});
        	this.socket.on("respuestaAtaque",function(datos){
        		console.log(datos);
+       		usr.cartaAtaque=undefined;
+       		usr.cartaRival=undefined;
+       		comprobarFin(datos.fase);
        		cli.meToca();
        	});
        	this.socket.on("respuestaAtaqueRival",function(datos){
        		console.log(datos);
+       		comprobarFin(datos.fase);
        		cli.meToca();
        	});
        	this.socket.on("rivalAbandona",function(data){

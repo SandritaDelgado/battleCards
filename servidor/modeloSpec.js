@@ -219,10 +219,10 @@ describe("El juego de las cartas...", function() {
 	      usr1.elixir=carta2.coste;
 	      usr1.jugarCarta(carta2);
 	      usr1.ataque(carta1,usr2);
-	      expect(usr1.turno.meToca()).toEqual(true);
+	      // expect(usr1.turno.meToca()).toEqual(true);
 	      expect(usr2.turno.meToca()).toEqual(false);
 	      usr1.ataque(carta2,usr2);
-	      expect(usr1.turno.meToca()).toEqual(true);
+	      expect(usr1.turno.meToca()).toEqual(false);
 	      expect(usr2.turno.meToca()).toEqual(false);     
 	    });
 	    it ("Si el numero de cartas excede el maximo de capacidad al final del turno se descartan las cartas sobrantes", function(){

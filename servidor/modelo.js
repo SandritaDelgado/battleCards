@@ -379,7 +379,7 @@ function Usuario(nombre,id){
 	this.nombre=nombre;
 	//this.id=undefined;
 	this.juego=undefined;
-	this.vidas=20;
+	this.vidas=3;
 	this.mazo=[];
 	//this.mano=[];
 	//this.ataque=[];
@@ -553,14 +553,14 @@ function Usuario(nombre,id){
     	var rival=this.partida.obtenerRival(this);
     	var objetivo=rival.obtenerCartaAtaqueNombre(idCarta2);
     	this.ataque(carta,objetivo);
-    	var json={"carta":carta,"objetivo":objetivo};
+    	var json={"carta":carta,"objetivo":objetivo, "fase":this.partida.fase.nombre};
     	return json;
     }
     this.atacarRivalConNombre=function(idCarta1){
     	var carta=this.obtenerCartaAtaqueNombre(idCarta1);
     	var rival=this.partida.obtenerRival(this);
     	this.ataque(carta,rival);
-    	var json={"carta":carta,"vidas":rival.vidas};
+    	var json={"carta":carta,"vidas":rival.vidas,"fase":this.partida.fase.nombre};
     	return json;
     }
     this.abandonarPartida=function(){
